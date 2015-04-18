@@ -34,22 +34,23 @@ var internals = {
 				
 		var rows = internals.generateGrid( config )
 		var cells = internals.generateCells( config, rows )
-		var uvs = internals.generateUvs( config, rows )
+		var positions = Flatten( rows )
+		var uvs = internals.generateUvs( config, positions )
 		
 		return {
-			rows: rows,
-			cells: cells,
+			positions: positions,
+			cells: Flatten( cells, true ),
 			uvs: uvs,
 			vertexCount: (config.sx + 1) * (config.sy + 1)
 		}
 	},
 	
-	generateUvs : function( config, rows ) {
+	generateUvs : function( config, positions ) {
 		
-		return internals.mapRows( rows, ([x,y]) => [
+		return Map( positions, ([x,y]) => [
 			x / config.wx + 0.5,
 			y / config.wy + 0.5
-		] )
+		])
 	},
 	
 	generateGrid : function( config ) {
@@ -96,7 +97,6 @@ var internals = {
 	
 	generateBoxPanels : function( config ) {
 		
-		var mapRows = internals.mapRows
 		var size = config.size
 		var segs = config.segments
 		
@@ -125,12 +125,12 @@ var internals = {
 		var xm = Clone(xp)
 		var ym = Clone(yp)
 		
-		zp.rows = mapRows( zp.rows, ([x,y]) => [          x,          y,  size[2]/2 ] )
-		zm.rows = mapRows( zm.rows, ([x,y]) => [          x,          y, -size[2]/2 ] )
-		xp.rows = mapRows( xp.rows, ([x,y]) => [  size[0]/2,          y,          x ] )
-		xm.rows = mapRows( xm.rows, ([x,y]) => [ -size[0]/2,          y,          x ] )
-		yp.rows = mapRows( yp.rows, ([x,y]) => [          x,  size[1]/2,          y ] )
-		ym.rows = mapRows( ym.rows, ([x,y]) => [          x, -size[1]/2,          y ] )
+		zp.positions = Map( zp.positions, ([x,y]) => [          x,          y,  size[2]/2 ] )
+		zm.positions = Map( zm.positions, ([x,y]) => [          x,          y, -size[2]/2 ] )
+		xp.positions = Map( xp.positions, ([x,y]) => [  size[0]/2,          y,          x ] )
+		xm.positions = Map( xm.positions, ([x,y]) => [ -size[0]/2,          y,          x ] )
+		yp.positions = Map( yp.positions, ([x,y]) => [          x,  size[1]/2,          y ] )
+		ym.positions = Map( ym.positions, ([x,y]) => [          x, -size[1]/2,          y ] )
 		
 		return [ zp, zm, xp, xm, yp, ym ]
 	},
@@ -139,12 +139,12 @@ var internals = {
 		
 		var panels = internals.generateBoxPanels( config )
 		
-		var rows = Pluck(panels, "rows")
+		var positions = Pluck(panels, "positions")
 		var uvs = Pluck(panels, "uvs")
 		var cells = Pluck(panels, "cells")
 		
 		return {
-			positions: Flatten( rows, true ),
+			positions: Flatten( positions, true ),
 			uvs:       Flatten( uvs, true ),
 			cells:     Flatten( internals.offsetCellIndices( panels ), true )
 		}
@@ -153,7 +153,6 @@ var internals = {
 	offsetCellIndices : function( panels ) {
 		
 		//  [ [0,1,2,2,3,0], [0,1,2,2,3,0] ] => [ [0,1,2,2,3,0], [6,7,8,8,9,6] ]
-		// return internals.mapRows( Flatten( cells ), (cellIndex, i) => cellIndex + cells.length * i )
 		
 		var offset = 0
 		
@@ -166,14 +165,7 @@ var internals = {
 		
 			return offsetCells
 		})
-	},
-	
-	mapRows : function( rows, fn ) {
-		return Map( rows, function( row ) {
-			return Map( row, fn )
-		})
-	},
-	
+	}
 }
 
 module.exports = function( properties ) {
