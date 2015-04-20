@@ -4,7 +4,7 @@
   "description": "Generate 3d box geometry",
   "main": "box.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "browserify tests.js | node | faucet"
   },
   "repository": {
     "type": "git",
@@ -38,5 +38,9 @@
     "transform": [
       "babelify"
     ]
+  },
+  "devDependencies": {
+    "faucet": "0.0.1",
+    "tape": "^4.0.0"
   }
 }
