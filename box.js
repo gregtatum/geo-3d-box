@@ -125,15 +125,15 @@ var internals = {
 		var ym = Clone(yp)
 		
 		zp.positions = Map( zp.positions, ([x,y]) => [          x,          y,  size[2]/2 ] )
-		zm.positions = Map( zm.positions, ([x,y]) => [          x,          y, -size[2]/2 ] )
-		xp.positions = Map( xp.positions, ([x,y]) => [  size[0]/2,          y,          x ] )
+		zm.positions = Map( zm.positions, ([x,y]) => [          x,         -y, -size[2]/2 ] )
+		xp.positions = Map( xp.positions, ([x,y]) => [  size[0]/2,         -y,          x ] )
 		xm.positions = Map( xm.positions, ([x,y]) => [ -size[0]/2,          y,          x ] )
-		yp.positions = Map( yp.positions, ([x,y]) => [          x,  size[1]/2,          y ] )
+		yp.positions = Map( yp.positions, ([x,y]) => [          x,  size[1]/2,         -y ] )
 		ym.positions = Map( ym.positions, ([x,y]) => [          x, -size[1]/2,          y ] )
 		
 		return [ zp, zm, xp, xm, yp, ym ]
 	},
-	
+		
 	generateBox : function( config ) {
 		
 		var panels = internals.generateBoxPanels( config )
