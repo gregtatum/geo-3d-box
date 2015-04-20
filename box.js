@@ -5,8 +5,7 @@ var Flatten = require('lodash.flatten')
 var Chunk = require('lodash.chunk')
 var Clone = require('lodash.clone')
 var Pluck = require('lodash.pluck')
-var Extend = require('xtend')
-var Mat4 = require('gl-mat4')
+var Extend = require('lodash.assign')
 
 var internals = {
 	
