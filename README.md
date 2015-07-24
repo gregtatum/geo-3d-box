@@ -36,7 +36,7 @@ Subdivide the cube.
 
 It is easy to offset the positions as needed. For instance to put the origin at the bottom.
 
-	var _ = require('lodash)
+	var _ = require('lodash')
 	
 	box.positions = _.chain( box.positions )
 		.chunk(3)
