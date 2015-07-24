@@ -4,6 +4,7 @@
   "description": "Generate 3d box geometry",
   "main": "box.js",
   "scripts": {
+    "build": "babel box.js > es5.js",
     "test": "browserify tests.js | node | faucet"
   },
   "repository": {
@@ -15,7 +16,8 @@
     "geometry",
     "WebGL",
     "box",
-    "cube"
+    "cube",
+    "es6"
   ],
   "author": "Greg Tatum",
   "license": "MIT",
@@ -40,6 +42,7 @@
     ]
   },
   "devDependencies": {
+    "babel": "^5.4.7",
     "faucet": "0.0.1",
     "lodash": "^3.7.0",
     "tape": "^4.0.0"

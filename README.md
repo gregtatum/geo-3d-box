@@ -45,3 +45,7 @@ It is easy to offset the positions as needed. For instance to put the origin at 
 		})
 		.flatten()
 		.value()
+
+## ES6
+
+This module is written using ES6, but gets transpiled to ES5 during the require process (if you are using Browserify.) There is an es5.js file that has already been transpiled and can be used like `require('geo-3d-box/es5')`.
