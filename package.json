@@ -1,6 +1,6 @@
 {
   "name": "geo-3d-box",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Generate 3d box geometry",
   "main": "box.js",
   "scripts": {
