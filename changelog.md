@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.0.4
+
+Noted the presence of ES6, and added an ES5 build.
+
 ### 1.0.3
 
 Fixed a winding order issue
