@@ -4,7 +4,6 @@
   "description": "Generate 3d box geometry",
   "main": "box.js",
   "scripts": {
-    "build": "babel box.js > es5.js",
     "test": "browserify tests.js | node | faucet"
   },
   "repository": {
@@ -17,7 +16,7 @@
     "WebGL",
     "box",
     "cube",
-    "es6"
+    "simplicial"
   ],
   "author": "Greg Tatum",
   "license": "MIT",
@@ -25,24 +24,8 @@
     "url": "https://github.com/TatumCreative/geo-3d-box/issues"
   },
   "homepage": "https://github.com/TatumCreative/geo-3d-box",
-  "dependencies": {
-    "babelify": "^6.0.2",
-    "lodash.chunk": "^3.0.0",
-    "lodash.clone": "^3.0.1",
-    "lodash.flatten": "^3.0.2",
-    "lodash.foreach": "^3.0.2",
-    "lodash.isnumber": "^3.0.1",
-    "lodash.map": "^3.1.0",
-    "lodash.pluck": "^3.0.2",
-    "lodash.assign": "^3.1.0"
-  },
-  "browserify": {
-    "transform": [
-      "babelify"
-    ]
-  },
+  "dependencies": {},
   "devDependencies": {
-    "babel": "^5.4.7",
     "faucet": "0.0.1",
     "lodash": "^3.7.0",
     "tape": "^4.0.0"

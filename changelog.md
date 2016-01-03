@@ -1,5 +1,9 @@
 # Changelog
 
+### 2.0.0
+
+Removed dependencies, and rewrote to be ES5 only.
+
 ### 1.0.4
 
 Noted the presence of ES6, and added an ES5 build.
