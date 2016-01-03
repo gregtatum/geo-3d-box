@@ -1,5 +1,3 @@
-var Flatten = require('lodash.flatten')
-
 function _createConfig( properties ) {
 	
 	var config = {
