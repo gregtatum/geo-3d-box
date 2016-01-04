@@ -104,7 +104,7 @@ function _generateRow( config, height ) {
 	return row
 }
 
-function _generateCells( config, rows ) {
+function _generateCells( config ) {
 	
 	function index( x, y ) {
 		return (config.sx + 1) * y + x
@@ -188,7 +188,6 @@ function _generateBox( config ) {
 	
 	var positions = panels.map(function(panel) { return panel.positions })
 	var uvs       = panels.map(function(panel) { return panel.uvs       })
-	var cells     = panels.map(function(panel) { return panel.cells     })
 	
 	return {
 		positions: _flatten2( positions, true ),
@@ -205,8 +204,7 @@ function _offsetCellIndices( panels ) {
 	
 	return panels.map(function(panel) {
 		
-		var flattenedCells = Flatten( panel.cells, true )
-		var offsetCells = flattenedCells.map( function(cell) { return cell + offset } )
+		var offsetCells = panel.cells.map( function(cell) { return cell + offset } )
 	
 		offset += panel.vertexCount
 	
