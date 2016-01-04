@@ -35,22 +35,6 @@ function _flatten( array ) {
 	return results
 }
 
-function _flatten2( a ) {
-	// Optimized flatten, for doing it twice
-	var results = []
-	
-	for( var i=0; i < a.length; i++ ) {
-		var b = a[i]
-		for( var j=0; j < b.length; j++ ) {
-			var c = b[j]
-			for( var k=0; k < c.length; k++ ) {
-				results.push(c[k])
-			}
-		}
-	}
-	return results
-}
-
 function _generatePanel( config ) {
 			
 	var rows      = _generateGrid( config )
