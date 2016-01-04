@@ -16,12 +16,13 @@ or
 		segments: 2
 	})
 
-The returned object is in the format of a simplicial complex with positions and cells.
+The returned object is in the format of a simplicial complex with positions and cell indices (faces). In addition uvs and normals are generated.
 
 	box = {
-		positions: [ -2.5,-2.5,2.5,0, ... ],
-		cells: [ 0,1,4,4,3,0, ... ],
-		uvs: [ 0,0,0.5,0,1,0, ... ]
+		positions: [ [x,y,z], [x,y,z], ... ],
+		cells: [ [0,1,4], [4,3,0], ... ],
+		uvs: [ [u,v], [u,v], ... ],
+		normals: [ [x,y,z], [x,y,z], ... ],
 	}
 
 ## Size (Array or Number)
@@ -32,16 +33,6 @@ Either an array or a single number. Sets the width, height, and depth of the box
 
 Subdivide the cube.
 
-## Move or modify the box
+## Migrating from v1.x.x
 
-It is easy to offset the positions as needed. For instance to put the origin at the bottom.
-
-	var _ = require('lodash')
-	
-	box.positions = _.chain( box.positions )
-		.chunk(3)
-		.each(function( vec ) {
-			vec[1] += 2.5
-		})
-		.flatten()
-		.value()
+The data is now all chunked in tuples like `[ [x,y,z], [x,y,z], ... ]` instead of `[ x,y,z,x,y,z,... ]` to be more in-line with stack.gl's ecosystem. In addition normals are now provided by default.

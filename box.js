@@ -60,7 +60,7 @@ function _generatePanel( config ) {
 	
 	return {
 		positions   : positions,
-		cells       : _flatten2( cells ),
+		cells       : cells,
 		uvs         : uvs,
 		vertexCount : (config.sx + 1) * (config.sy + 1)
 	}
@@ -110,11 +110,9 @@ function _generateCells( config ) {
 		return (config.sx + 1) * y + x
 	}
 	
-	var cells = Array( config.sx )
+	var cells = []
 	
 	for( var x=0; x < config.sx; x++ ) {
-		
-		cells[x] = Array( config.sy )
 		
 		for( var y=0; y < config.sy; y++ ) {
 
@@ -123,12 +121,11 @@ function _generateCells( config ) {
 			var c = index( x + 1, y + 1 )  //    |__|
 			var d = index( x + 0, y + 1 )  //   a    b
 			
-			cells[x][y] = [
-				a, b, c,
-				c, d, a
-			]
+			cells.push( [ a, b, c ] )
+			cells.push( [ c, d, a ] )
 		}
 	}
+	
 	return cells
 }
 
@@ -179,7 +176,25 @@ function _generateBoxPanels( config ) {
 	yp.positions = yp.positions.map( function(p) { return [       p[0],  size[1]/2,      -p[1] ] } )
 	ym.positions = ym.positions.map( function(p) { return [       p[0], -size[1]/2,       p[1] ] } )
 	
+	zp.normals = _makeNormals( [ 0, 0, 1], zp.positions.length )
+	zm.normals = _makeNormals( [ 0, 0,-1], zm.positions.length )
+	xp.normals = _makeNormals( [ 1, 0, 0], xp.positions.length )
+	xm.normals = _makeNormals( [-1, 0, 0], xm.positions.length )
+	yp.normals = _makeNormals( [ 0, 1, 0], yp.positions.length )
+	ym.normals = _makeNormals( [ 0,-1, 0], ym.positions.length )
+	
 	return [ zp, zm, xp, xm, yp, ym ]
+}
+
+function _makeNormals( normal, count ) {
+	
+	var normals = Array(count)
+	
+	for( var i=0; i < count; i++ ) {
+		normals[i] = normal.slice()
+	}
+	
+	return normals
 }
 	
 function _generateBox( config ) {
@@ -188,23 +203,33 @@ function _generateBox( config ) {
 	
 	var positions = panels.map(function(panel) { return panel.positions })
 	var uvs       = panels.map(function(panel) { return panel.uvs       })
+	var normals   = panels.map(function(panel) { return panel.normals   })
+	var cells     = _offsetCellIndices( panels )
 	
 	return {
-		positions: _flatten2( positions, true ),
-		uvs:       _flatten2( uvs, true ),
-		cells:     _flatten( _offsetCellIndices( panels ), true )
+		positions: _flatten( positions ),
+		uvs:       _flatten( uvs ),
+		cells:     _flatten( cells ),
+		normals:   _flatten( normals ),
 	}
 }
 
 function _offsetCellIndices( panels ) {
 	
-	//  [ [0,1,2,2,3,0], [0,1,2,2,3,0] ] => [ [0,1,2,2,3,0], [6,7,8,8,9,6] ]
+	/*
+		From: [[[0,1,2],[2,3,0]],[[0,1,2],[2,3,0]]]
+		To:   [[[0,1,2],[2,3,0]],[[6,7,8],[8,9,6]]]
+	*/
 	
 	var offset = 0
 	
 	return panels.map(function(panel) {
 		
-		var offsetCells = panel.cells.map( function(cell) { return cell + offset } )
+		var offsetCells = panel.cells.map( function(cell) {
+			return cell.map(function(v) {
+				return v + offset
+			})
+		})
 	
 		offset += panel.vertexCount
 	
@@ -215,6 +240,6 @@ function _offsetCellIndices( panels ) {
 module.exports = function( properties ) {
 	
 	var config = _createConfig( properties )
-	
+
 	return _generateBox( config )
 }

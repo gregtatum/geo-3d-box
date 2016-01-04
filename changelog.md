@@ -2,7 +2,7 @@
 
 ### 2.0.0
 
-Removed dependencies, and rewrote to be ES5 only.
+Removed dependencies, and rewrote to be ES5 only. Note the require('geo-3d-box/es5') is no longer an option. The data is now all chunked in tuples like `[ [x,y,z], [x,y,z], ... ]` instead of `[ x,y,z,x,y,z,... ]` to be more in-line with stack.gl's ecosystem. In addition normals are now provided by default.
 
 ### 1.0.4
 
