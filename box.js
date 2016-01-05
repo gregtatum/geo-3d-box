@@ -9,14 +9,14 @@ function _createConfig( properties ) {
 	
 		if( Array.isArray( properties.size ) ) {
 			config.size = properties.size
-		} else if( typeof config.size === "number" ) {
-			config.size = [config.size, config.size, config.size]
+		} else if( typeof properties.size === "number" ) {
+			config.size = [properties.size, properties.size, properties.size]
 		}
 	
 		if( Array.isArray( properties.segments ) ) {
 			config.segments = properties.segments
-		} else if( typeof config.segments === "number" ) {
-			config.segments = [config.segments, config.segments, config.segments]
+		} else if( typeof properties.segments === "number" ) {
+			config.segments = [properties.segments, properties.segments, properties.segments]
 		}
 	}
 	
